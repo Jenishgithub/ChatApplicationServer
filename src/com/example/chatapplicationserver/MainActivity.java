@@ -14,13 +14,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	static final int SocketServerPORT = 8080;
-
+	Double latlng;
 	TextView infoIp, infoPort, chatMsg;
 
 	String msgLog = "";
@@ -145,11 +146,17 @@ public class MainActivity extends Activity {
 
 				broadcastMsg(n + " join our chat.\n");
 
+				List<Double> latlnglist = new ArrayList<Double>();
 				while (true) {
 					if (dataInputStream.available() > 0) {
 						String newMsg = dataInputStream.readUTF();
 
 						msgLog += n + ": " + newMsg;
+						latlng = Double.parseDouble(newMsg);
+						latlnglist.add(latlng);
+						Log.d("crossover", "Double equivalent is :"
+								+ latlnglist);
+
 						MainActivity.this.runOnUiThread(new Runnable() {
 
 							@Override
